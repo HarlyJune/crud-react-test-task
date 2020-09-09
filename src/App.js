@@ -1,21 +1,39 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Tab from "./Tab/Tab";
 
-class App extends Component {
+function App() {
+  const [items, setItems] = React.useState([
+    { id: 1, completed: false, title: "kekw" },
+    { id: 2, completed: false, title: "kekw" },
+    { id: 3, completed: false, title: "kekw" }]
+  );
+  function toggleItem(id) {
+   setItems(
+      items.map((item) => {
+        if (item.id === id) {
+          item.completed = !item.completed;
+        }
+        return item;
+      })
+    );
+  }
+  return (
+    <div className='wrapper'>
+      <h1>Get React!</h1>
+      <Tab items={items} onToggle={toggleItem}></Tab>
+    </div>
+  );
+}
+export default App;
+
+/* class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className='wrapper'>
+        <h1>Get React!</h1>
+        <Tab></Tab>
       </div>
     );
   }
 }
-
-export default App;
+*/
