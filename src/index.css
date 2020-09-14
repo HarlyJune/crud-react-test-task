@@ -4,10 +4,8 @@ body {
   font-family: sans-serif;
 }
 .wrapper {
-  padding-top: 5rem;
+padding: 20px;
+  padding-top: 0rem;
   margin: 0 auto;
-  width: 600px;
-}
-.fuckOff {
- text-decoration: line-through; 
+  width: 97%;
 }

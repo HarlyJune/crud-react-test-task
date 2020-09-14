@@ -4,6 +4,7 @@ import DataItem from "./DataItem";
 
 const styles = {
   ul: {
+    width: '100%',
     listStyle: "none",
     margin: 0,
     padding: 0,
@@ -17,7 +18,7 @@ function Tab(props) {
         return (
           <DataItem
             item={item}
-            key={item.id}
+            key={item._id}
             index={index}
             onChange={props.onToggle}
           />

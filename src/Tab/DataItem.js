@@ -11,26 +11,25 @@ const styles = {
     border: "1px solid #ccc",
     borderRadius: "4px",
     marginBottom: ".5rem",
+    height: '3rem',
+    fontSize: '1.5rem',
+    fontFamily: 'consolas'
   },
   input: {
     marginRight: "1rem",
   },
   button: {
-    background: "red",
-    borderRadius: "30%",
+    background: "crimson",
+    borderRadius: "25%",
     color: "#fff",
     border: "none",
   },
 };
 function DataItem({ item, index, onChange }) {
   const { removeItem } = useContext(Context);
-  // const classes = [];
-  // if (item.completed) {
-  //   classes.push("fuckOff");
-  // }
   return (
     <li style={styles.li}>
-      <span /*className={classes.join(" ")}*/>
+      <span >
        
         <strong>{index + 1}</strong>
         &nbsp;
@@ -51,10 +50,3 @@ DataItem.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 export default DataItem;
-
-/*<input  style={styles.input}   
-type='checkbox'
-checked={item.completed}
-
-onChange={() => onChange(item.id)}
-/>*/

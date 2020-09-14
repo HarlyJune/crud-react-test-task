@@ -21,7 +21,7 @@ function App() {
 
   function removeItem(_id) {
     fetch(`http://178.128.196.163:3000/api/records/${_id}`, {
-      
+
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -34,30 +34,26 @@ function App() {
         setItems(items.filter((item) => item._id !== _id));
       });
   }
-  
+
   function addItem(title) {
-    console.log(title)
-    var id = Date.now();
-    var data = {
-          name: title, fio: title, _id: id
-      };
-    const formData  = new FormData();
-    formData.append('data', data)
-    fetch(`http://127.0.0.1:3000`, {
-      mode: "cors",
+
+    fetch(`http://localhost:3000/api/records`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: {data:data}
-    
-    }).then((response) => console.log(response, response.body, response.json()))
-  //   .then((response) => {
-  //     setItems(
-  //       items.concat(data) 
-  //   )})
-   }
+      body: JSON.stringify({
+        data: {
+          value: title
+        }
+      })
+
+    }).then( resp => resp.json().then(newItem => { 
+      
+      setItems([...items, newItem]);
+    }));
+  }
 
   return (
     <Context.Provider value={{ removeItem }}>
@@ -72,27 +68,3 @@ function App() {
   );
 }
 export default App;
-
-/* class App extends Component {
-  render() {
-    return (
-      <div className='wrapper'>
-        <h1>Get React!</h1>
-        <Tab></Tab>
-      </div>
-    );
-  }
-}*/
-
-/*function toggleItem(id) {
-    setItems(
-      items.map((item) => {
-        if (item.id === id) {
-          item.completed = !item.completed;
-        }
-        return item;
-      })
-    );
-  }*/
-/*onToggle={toggleItem}*/
-/* completed: false*/
