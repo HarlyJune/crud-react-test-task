@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import Context from "../context";
+
 const styles = {
   li: {
     display: "flex",
@@ -21,23 +23,25 @@ const styles = {
   },
 };
 function DataItem({ item, index, onChange }) {
-  const classes = []
-  if (item.completed){
-    classes.push('fuckOff')
-  }
+  const { removeItem } = useContext(Context);
+  // const classes = [];
+  // if (item.completed) {
+  //   classes.push("fuckOff");
+  // }
   return (
     <li style={styles.li}>
-      <span className={classes.join(' ')}>
-        <input
-          type='checkbox'
-          style={styles.input}
-          onChange={() => onChange(item.id)} //console.log(item.id)}
-        />
+      <span /*className={classes.join(" ")}*/>
+       
         <strong>{index + 1}</strong>
         &nbsp;
-        {item.title}
+        {item.title}                                        
+        {item._id}  
+        {(item.__v) ? item.__v:''}
+        {(item.data) ? JSON.stringify(item.data):''}
       </span>
-      <button style={styles.button}>&times;</button>
+      <button style={styles.button} onClick={() => removeItem(item._id)}>
+        &times;
+      </button>
     </li>
   );
 }
@@ -47,3 +51,10 @@ DataItem.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 export default DataItem;
+
+/*<input  style={styles.input}   
+type='checkbox'
+checked={item.completed}
+
+onChange={() => onChange(item.id)}
+/>*/
