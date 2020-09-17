@@ -4,8 +4,55 @@ body {
   font-family: sans-serif;
 }
 .wrapper {
-padding: 20px;
+  padding: 20px;
   padding-top: 0rem;
   margin: 0 auto;
   width: 97%;
+}
+.non-disp {
+  display: none;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.button-ed {
+  font-family: "consolas";
+  height: 100%;
+  font-size: 1.5rem;
+  width: 12rem;
+  background-color: darkGrey;
+  color: #fff;
+  border: none;
+  padding: 0 1.5rem;
+}
+.field-ed {
+  width: 100%;
+  margin-left: 1.5rem;
+  font-size: larger;
+  height: 95%;
+  overflow: auto;
+}
+.data-item {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  height: 6rem;
+  font-size: 1.5rem;
+  font-family: consolas;
+}
+.pl-0 {
+  padding-left: 0rem;
+}
+.ml-0 {
+  margin-left: 0rem;
+}
+.w-7rem {
+  display: block;
+  max-width: 7rem;
+}
+.bg-crimson {
+  background-color: crimson;
 }

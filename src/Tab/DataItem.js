@@ -1,45 +1,62 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Context from "../context";
 
-const styles = {
-  li: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: ".5rem 1rem",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    marginBottom: ".5rem",
-    height: '3rem',
-    fontSize: '1.5rem',
-    fontFamily: 'consolas'
-  },
-  input: {
-    marginRight: "1rem",
-  },
-  button: {
-    background: "crimson",
-    borderRadius: "25%",
-    color: "#fff",
-    border: "none",
-  },
-};
-function DataItem({ item, index, onChange }) {
-  const { removeItem } = useContext(Context);
+function DataItem({ item, index }) {
+  const [editModeState, setEditModeState] = useState(false);
+  const textInput = useRef(null);
+  const [lastText, setLastText] = useState("");
+  function editItem(_id) {
+    setEditModeState(true);
+    textInput.current.focus();
+    setLastText(textInput.current.innerText);
+  }
+  function saveEdit(_id) {
+    setEditModeState(false);
+    console.log(_id, textInput);
+    let data = JSON.parse(textInput.current.innerText);
+    EditItems(_id, data);
+  }
+  const cancelEdit = () => {
+    console.log(lastText);
+    setEditModeState(false);
+    textInput.current.innerText = lastText;
+  };
+
+  const { removeItem, EditItems } = useContext(Context);
+
   return (
-    <li style={styles.li}>
-      <span >
-       
+    <li className={"data-item"}>
+      <span>
         <strong>{index + 1}</strong>
         &nbsp;
-        {item.title}                                        
-        {item._id}  
-        {(item.__v) ? item.__v:''}
-        {(item.data) ? JSON.stringify(item.data):''}
+        {item._id}
       </span>
-      <button style={styles.button} onClick={() => removeItem(item._id)}>
-        &times;
+      <pre
+        className={"field-ed"}
+        ref={textInput}
+        contentEditable={editModeState}>
+        {item.data ? JSON.stringify(item.data, null, 2) : ""}
+      </pre>
+      <button
+        onClick={() => editItem(item._id)}
+        className={`mlAuto button-ed ${editModeState ? "non-disp" : ""}`}>
+        Edit &#9998;
+      </button>
+      <button
+        onClick={() => saveEdit(item._id)}
+        className={`mlAuto button-ed ${editModeState ? "" : "non-disp"}`}>
+        SaveEdit
+      </button>
+      <button
+        onClick={() => cancelEdit(item._id)}
+        className={`button-ed ${editModeState ? "" : "non-disp"}`}>
+        CancelEdit
+      </button>
+      <button
+        className={"button-ed w-7rem bg-crimson"}
+        onClick={() => removeItem(item._id)}>
+        &#10006;
       </button>
     </li>
   );
@@ -48,5 +65,6 @@ DataItem.propTypes = {
   items: PropTypes.object.isRequired,
   index: PropTypes.number,
   onChange: PropTypes.func.isRequired,
+  EditItems: PropTypes.func.isRequired,
 };
 export default DataItem;

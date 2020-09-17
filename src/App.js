@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Tab from "./Tab/Tab";
 import Context from "./context";
-
 const AddItem = React.lazy(() => import("./Tab/AddItem"));
+
 function App() {
   const [items, setItems] = React.useState([]);
   useEffect(() => {
@@ -21,7 +21,6 @@ function App() {
 
   function removeItem(_id) {
     fetch(`http://178.128.196.163:3000/api/records/${_id}`, {
-
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -36,27 +35,45 @@ function App() {
   }
 
   function addItem(title) {
-
     fetch(`http://localhost:3000/api/records`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         data: {
-          value: title
-        }
+          value: title,
+        },
+      }),
+    }).then((resp) =>
+      resp.json().then((newItem) => {
+        setItems([...items, newItem]);
       })
-
-    }).then( resp => resp.json().then(newItem => { 
-      
-      setItems([...items, newItem]);
-    }));
+    );
+  }
+  function EditItems(_id, data) {
+    fetch(`http://localhost:3000/api/records/${_id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: data,
+      }),
+    }).then((resp) =>
+      resp.json().then((newItem) => {
+        items
+          .filter((item) => item._id === _id)
+          .forEach((item) => (item.data = data));
+        setItems([...items]);
+      })
+    );
   }
 
   return (
-    <Context.Provider value={{ removeItem }}>
+    <Context.Provider value={{ removeItem, EditItems }}>
       <div className='wrapper'>
         <h1>Get React!</h1>
         <React.Suspense fallback={<p>loading</p>}>

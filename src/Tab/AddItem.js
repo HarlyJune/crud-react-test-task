@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const styles = {
-  form: {
-    margin: "1rem",
-  },
-};
-
 function useInputValue(defaultValue = "") {
   const [value, setValue] = useState(defaultValue);
   return {
@@ -14,8 +8,8 @@ function useInputValue(defaultValue = "") {
       value,
       onChange: (event) => setValue(event.target.value),
     },
-    clear: () => setValue(''),
-    value: () => value
+    clear: () => setValue(""),
+    value: () => value,
   };
 }
 function AddItem({ onCreate }) {
@@ -24,14 +18,15 @@ function AddItem({ onCreate }) {
     event.preventDefault();
     if (input.value().trim()) {
       onCreate(input.value());
-      input.clear()
-      
+      input.clear();
     }
   }
   return (
-    <form style={styles.form} onSubmit={submitHandler}>
-      <input {...input.bind} />
-      <button type='submit'>Add!</button>
+    <form className={"data-item pl-0"} onSubmit={submitHandler}>
+      <input className={"field-ed ml-0"} {...input.bind} />
+      <button className={"button-ed w-7rem"} type='submit'>
+        Add!&#10010;
+      </button>
     </form>
   );
 }

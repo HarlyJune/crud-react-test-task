@@ -4,7 +4,7 @@ import DataItem from "./DataItem";
 
 const styles = {
   ul: {
-    width: '100%',
+    width: "100%",
     listStyle: "none",
     margin: 0,
     padding: 0,
@@ -29,6 +29,6 @@ function Tab(props) {
 }
 Tab.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
 };
 export default Tab;
