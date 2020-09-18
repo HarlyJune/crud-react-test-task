@@ -33,7 +33,7 @@ body {
   overflow: auto;
 }
 .data-item {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   padding-left: 1rem;
   border: 1px solid #ccc;
@@ -56,3 +56,32 @@ body {
 .bg-crimson {
   background-color: crimson;
 }
+
+.dspl-fl {
+  display: flex;
+}
+table {
+  width: 100%;
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px solid grey;
+}
+
+td {
+  border: 1px solid grey;
+}
+.head-tab{
+  font-size: 1.5rem;
+  height: 3rem;
+}
+/* const styles = {
+  ul: {
+    width: "100%",
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+  },
+}; */

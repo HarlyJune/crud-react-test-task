@@ -22,8 +22,13 @@ function AddItem({ onCreate }) {
     }
   }
   return (
-    <form className={"data-item pl-0"} onSubmit={submitHandler}>
+    <form className={"data-item pl-0 dspl-fl"} onSubmit={submitHandler}>
+      <label>Name</label>
+      <input type="text" name="name" className={"field-ed ml-0"} {...input.bind} />
+      <label>Username</label>
+      <input type="text" name="username" className={"field-ed ml-0"} {...input.bind} />
       <input className={"field-ed ml-0"} {...input.bind} />
+      
       <button className={"button-ed w-7rem"} type='submit'>
         Add!&#10010;
       </button>
