@@ -1,38 +1,59 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import PropTypes from "prop-types";
 
-function useInputValue(defaultValue = "") {
-  const [value, setValue] = useState(defaultValue);
-  return {
-    bind: {
-      value,
-      onChange: (event) => setValue(event.target.value),
-    },
-    clear: () => setValue(""),
-    value: () => value,
-  };
-}
-function AddItem({ onCreate }) {
-  const input = useInputValue("");
+
+function AddItem({ onCreate, keys, setKeys }) {
+  const textInput = useRef([]);
+  const addFieldKey = "addField";
+
   function submitHandler(event) {
     event.preventDefault();
-    if (input.value().trim()) {
-      onCreate(input.value());
-      input.clear();
+    var data = {};
+    keys.forEach(key => { 
+      var newValue = textInput?.current[key]?.value;
+      if(newValue){ 
+        data[key] = newValue; 
+      }
+    })
+    console.warn(data);
+    onCreate(data);
+    // onCreate()
+  }
+
+  function addKey(e) {
+    var el = textInput.current[addFieldKey];
+    var name = el.value;
+    if (name) {
+      var newKeys = [...keys, name]
+      setKeys(newKeys);
+      el.value = ''
     }
   }
+
+
   return (
-    <form className={"data-item pl-0 dspl-fl"} onSubmit={submitHandler}>
-      <label>Name</label>
-      <input type="text" name="name" className={"field-ed ml-0"} {...input.bind} />
-      <label>Username</label>
-      <input type="text" name="username" className={"field-ed ml-0"} {...input.bind} />
-      <input className={"field-ed ml-0"} {...input.bind} />
-      
-      <button className={"button-ed w-7rem"} type='submit'>
-        Add!&#10010;
+    <div className={"data-item pl-0 dspl-fl"}>
+      {keys.map((key) => {
+        return (
+          <input
+            key={key} className={"field-ed ml-0"} ref={(el) => (textInput.current[key] = el)}
+            type="text" name={key} placeholder={key}
+          />
+        );
+      })
+      }
+      <input
+        key={addFieldKey} className={"field-ed ml-0"} ref={(el) => (textInput.current[addFieldKey] = el)}
+        type="text" name={addFieldKey} placeholder={"+ 'new field'"}
+      />
+
+      <button className={"button-ed"} onClick={submitHandler}>
+        &#10010; item
       </button>
-    </form>
+      <button className={"button-ed"} onClick={addKey} >
+        &#10010; field
+      </button>
+    </div>
   );
 }
 

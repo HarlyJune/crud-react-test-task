@@ -6,53 +6,62 @@ function DataItem({ item, index, keys }) {
   const [editModeState, setEditModeState] = useState(false);
   // const myRefs= useRef([]);
   const textInput = useRef([]);
-  const [lastText, setLastText] = useState("");
   function editItem() {
     setEditModeState(true);
-    
-    setLastText(textInput);
     console.log(textInput) // tut doljen vizivatsya massive?
   }
+
   function saveEdit(keys) {
     setEditModeState(false);
-    // console.log(keys, textInput);    //console log
-    data = {
-    }                              //= JSON.parse(lastText);
-    keys.forEach{ 
-      function 123(textInput){item.data.object ? (dataKey) => {textInput.current[key]}}
+
+    var data = {};                            
+    keys.forEach( (key) => { 
+      var newValue = textInput.current[key]?.innerText;
+      if(newValue && newValue != "\n"){
+        data[key] = newValue;
+      }
+    })
        
-    }
-    EditItems(keys, data);
+    EditItems(item._id, data);
+    
   }
+
   const cancelEdit = () => {
     // console.log(lastText);    //console log
     setEditModeState(false);
-    textInput.current.innerText = lastText;
+    keys.forEach( (key) => { 
+      var textInputCurrent = textInput?.current[key];
+      var dataCurrent = item?.data[key];
+      if(textInputCurrent && dataCurrent){
+        textInputCurrent.innerText = dataCurrent;
+      }
+    })
   };
 
   const { removeItem, EditItems } = useContext(Context);
 
   return (
     <tr className={"data-item"}>
-      <td>
-        <strong>{index + 1}</strong>
-        <pre className={"field-ed"}>
-          {item.data ? JSON.stringify(item.data, null, 2) : ""}
-        </pre>
+        <td>
+          <strong>{index + 1}</strong>
+          <pre className={"field-ed"}>
+            {item.data ? JSON.stringify(item.data, null, 2) : ""}
+          </pre>
       </td>
-      {Array.from(keys).map((key) => {
-        //Array.from (передается пременная с set`ом)
-        return (
-          <td
-            key={key}
-            className={"field-ed"}
-            ref={(el) => (textInput.current[key] = el)} // ref = textInput(item.data)
-            contentEditable={editModeState}>
-            {item.data[key]}
-            {console.log(item.data)}
-          </td>
-        );
-      })}
+
+      {keys.map((key) => {
+          //Array.from (передается пременная с set`ом)  
+          return (
+            <td
+              key={key}
+              className={"field-ed"}
+              ref={(el) => (textInput.current[key] = el)} // ref = textInput(item.data)
+              contentEditable={editModeState}>
+              {item.data ? item.data[key] : ""}
+            </td>
+          );
+        })
+      }
       <td>
         <button
           onClick={() => editItem(keys)}
@@ -70,19 +79,18 @@ function DataItem({ item, index, keys }) {
           CancelEdit
         </button>
         <button
-          className={"button-ed w-7rem bg-crimson"}
+          className={"button-ed bg-crimson"}
           onClick={() => removeItem(item._id)}>
           &#10006;
         </button>
       </td>
+      
     </tr>
   );
 }
 DataItem.propTypes = {
   keys: PropTypes.object.isRequired,
-  items: PropTypes.object.isRequired,
   index: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
   EditItems: PropTypes.func.isRequired,
 };
 export default DataItem;
