@@ -57,7 +57,9 @@ body {
 }
 
 .dspl-fl {
-  display: flex;
+  display: flex
+  
+  ;
 }
 table {
   width: 100%;
@@ -75,6 +77,10 @@ td {
 .head-tab{
   font-size: 1.5rem;
   height: 3rem;
+}
+.ds-block{
+  display:block;
+
 }
 /* const styles = {
   ul: {

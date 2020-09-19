@@ -6,7 +6,15 @@ const AddItem = React.lazy(() => import("./Tab/AddItem"));
 function App() {
   const [items, setItems] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
-
+  function resetKeys(newItems) {
+    var newKeys = [];
+    newItems.forEach((item) => {
+      if (item.data) {
+        Object.keys(item.data).forEach((key) => newKeys.push(key));
+      }
+    });
+    setKeys(unique(newKeys));
+  }
   useEffect(() => {
     fetch("http://178.128.196.163:3000/api/records", {
       method: "GET",
@@ -22,8 +30,8 @@ function App() {
       });
   }, []);
 
-  function unique(array){
-      return array.filter((v, i, a) => a.indexOf(v) === i)
+  function unique(array) {
+    return array.filter((v, i, a) => a.indexOf(v) === i);
   }
 
   function removeItem(_id) {
@@ -49,25 +57,15 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        data: data
+        data: data,
       }),
     }).then((resp) =>
-    resp.json().then((newItem) => {    
+      resp.json().then((newItem) => {
         var newItems = [...items, newItem];
         resetKeys(newItems);
         setItems(newItems);
       })
     );
-  }
-
-  function resetKeys(newItems){
-    var newKeys = [];
-    newItems.forEach((item) => {
-      if(item.data){
-        Object.keys(item.data).forEach((key) => newKeys.push(key));
-      }
-    });
-    setKeys(unique(newKeys));
   }
 
   function EditItems(_id, data) {
@@ -83,27 +81,28 @@ function App() {
     }).then((resp) =>
       resp.json().then((newItem) => {
         items
-          .filter((item) => item._id === _id)     //??
+          .filter((item) => item._id === _id)
           .forEach((item) => (item.data = newItem.data));
         resetKeys(items);
-        setItems([...items]);
+        setItems([...items]); 
+        updateItems()
       })
     );
   }
-
-
-  // function callFunction(fun){
-  //   var a = 4;
-  //   var b = 5;
-  //   return fun(a, b);
-  // }
-
-  // var f = (arg1) => arg1 + "some";
-
-  // var result = callFunction(f);
-  // result == "4some"
-
-
+  function updateItems(){
+    fetch("http://178.128.196.163:3000/api/records", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((items) => {
+        resetKeys(items);
+        setItems(items);
+      });
+  }
 
   return (
     <Context.Provider value={{ removeItem, EditItems }}>
@@ -112,7 +111,11 @@ function App() {
         <React.Suspense fallback={<p>loading</p>}>
           <AddItem onCreate={addItem} keys={keys} setKeys={setKeys} />
         </React.Suspense>
-        {items.length ? <Tab items={items} keys={keys} ></Tab> : <p>nothing here</p>}    {/* ??  */}
+        {items.length ? (
+          <Tab items={items} keys={keys}></Tab>
+        ) : (
+          <p>nothing here</p>
+        )}{" "}
       </div>
     </Context.Provider>
   );

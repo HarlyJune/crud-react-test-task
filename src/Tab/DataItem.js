@@ -1,67 +1,62 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import Context from "../context";
 
 function DataItem({ item, index, keys }) {
   const [editModeState, setEditModeState] = useState(false);
-  // const myRefs= useRef([]);
   const textInput = useRef([]);
   function editItem() {
     setEditModeState(true);
-    console.log(textInput) // tut doljen vizivatsya massive?
+    console.log(textInput);
   }
 
   function saveEdit(keys) {
     setEditModeState(false);
-
-    var data = {};                            
-    keys.forEach( (key) => { 
+    var data = {};
+    keys.forEach((key) => {
       var newValue = textInput.current[key]?.innerText;
-      if(newValue && newValue != "\n"){
+      if (newValue && newValue !== "\n") {
         data[key] = newValue;
       }
-    })
-       
+    });
+    
     EditItems(item._id, data);
     
   }
 
   const cancelEdit = () => {
-    // console.log(lastText);    //console log
     setEditModeState(false);
-    keys.forEach( (key) => { 
+    keys.forEach((key) => {
       var textInputCurrent = textInput?.current[key];
       var dataCurrent = item?.data[key];
-      if(textInputCurrent && dataCurrent){
+      if (textInputCurrent && dataCurrent) {
         textInputCurrent.innerText = dataCurrent;
       }
-    })
+    });
   };
 
   const { removeItem, EditItems } = useContext(Context);
 
   return (
     <tr className={"data-item"}>
-        <td>
-          <strong>{index + 1}</strong>
-          <pre className={"field-ed"}>
-            {item.data ? JSON.stringify(item.data, null, 2) : ""}
-          </pre>
+      <td>
+        <strong>{index + 1}</strong>
+        <pre className={"field-ed"}>
+          {item.data ? JSON.stringify(item.data, null, 2) : ""}
+        </pre>
       </td>
 
       {keys.map((key) => {
-          //Array.from (передается пременная с set`ом)  
-          return (
-            <td
-              key={key}
-              className={"field-ed"}
-              ref={(el) => (textInput.current[key] = el)} // ref = textInput(item.data)
-              contentEditable={editModeState}>
-              {item.data ? item.data[key] : ""}
-            </td>
-          );
-        })
-      }
+        return (
+          <td
+            key={key}
+            className={"field-ed"}
+            ref={(el) => (textInput.current[key] = el)}
+            contentEditable={editModeState}>
+            {item.data ? item.data[key] : ""}
+          </td>
+        );
+      })}
       <td>
         <button
           onClick={() => editItem(keys)}
@@ -84,7 +79,6 @@ function DataItem({ item, index, keys }) {
           &#10006;
         </button>
       </td>
-      
     </tr>
   );
 }
