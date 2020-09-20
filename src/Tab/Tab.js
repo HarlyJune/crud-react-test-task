@@ -18,7 +18,7 @@ function Tab(props) {
               );
             })
           : "nothing here"}
-        <th>Actions</th>
+        <th className="td-action-button">Actions</th>
       </tr>
       {props.items.map((item, index) => {
         return (

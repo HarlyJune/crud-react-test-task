@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 function AddItem({ onCreate, keys, setKeys }) {
   const textInput = useRef([]);
   const addFieldKey = "addField";
-
   function submitHandler(event) {
     event.preventDefault();
     var data = {};
@@ -16,9 +15,7 @@ function AddItem({ onCreate, keys, setKeys }) {
     });
     console.warn(data);
     onCreate(data);
-    // onCreate()
   }
-
   function addKey(e) {
     var el = textInput.current[addFieldKey];
     var name = el.value;
@@ -28,10 +25,9 @@ function AddItem({ onCreate, keys, setKeys }) {
       el.value = "";
     }
   }
-
   return (
-    <div >
-      <div style={{ display: "block" }}>
+    <div>
+      <div className={"form-item"}>
         <input
           key={addFieldKey}
           className={"field-ed ml-0"}
@@ -40,11 +36,11 @@ function AddItem({ onCreate, keys, setKeys }) {
           name={addFieldKey}
           placeholder={"+ 'new field'"}
         />
-        <button className={"button-ed"} onClick={addKey}>
+        <button className={"add-button"} onClick={addKey}>
           &#10010; field
         </button>
       </div>
-      <div className={"data-item pl-0 "}>
+      <div className={"form-item"}>
         {keys.map((key) => {
           return (
             <input
@@ -58,7 +54,7 @@ function AddItem({ onCreate, keys, setKeys }) {
           );
         })}
 
-        <button className={"button-ed"} onClick={submitHandler}>
+        <button className={"add-button"} onClick={submitHandler}>
           &#10010; item
         </button>
       </div>

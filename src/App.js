@@ -29,11 +29,10 @@ function App() {
         setItems(items);
       });
   }, []);
-
+  
   function unique(array) {
     return array.filter((v, i, a) => a.indexOf(v) === i);
   }
-
   function removeItem(_id) {
     fetch(`http://178.128.196.163:3000/api/records/${_id}`, {
       method: "DELETE",
@@ -107,7 +106,7 @@ function App() {
   return (
     <Context.Provider value={{ removeItem, EditItems }}>
       <div className='wrapper'>
-        <h1>Get React!</h1>
+        <h1>Go React!</h1>
         <React.Suspense fallback={<p>loading</p>}>
           <AddItem onCreate={addItem} keys={keys} setKeys={setKeys} />
         </React.Suspense>

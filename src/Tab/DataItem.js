@@ -9,8 +9,8 @@ function DataItem({ item, index, keys }) {
     setEditModeState(true);
     console.log(textInput);
   }
-
   function saveEdit(keys) {
+    //rabota
     setEditModeState(false);
     var data = {};
     keys.forEach((key) => {
@@ -19,11 +19,8 @@ function DataItem({ item, index, keys }) {
         data[key] = newValue;
       }
     });
-    
     EditItems(item._id, data);
-    
   }
-
   const cancelEdit = () => {
     setEditModeState(false);
     keys.forEach((key) => {
@@ -41,40 +38,41 @@ function DataItem({ item, index, keys }) {
     <tr className={"data-item"}>
       <td>
         <strong>{index + 1}</strong>
-        <pre className={"field-ed"}>
+        <pre 
+        // className={"field-ed"}
+        >
           {item.data ? JSON.stringify(item.data, null, 2) : ""}
         </pre>
       </td>
-
       {keys.map((key) => {
         return (
           <td
             key={key}
-            className={"field-ed"}
+            // className={"field-ed"}
             ref={(el) => (textInput.current[key] = el)}
             contentEditable={editModeState}>
             {item.data ? item.data[key] : ""}
           </td>
         );
       })}
-      <td>
+      <td className="td-action-button">
         <button
           onClick={() => editItem(keys)}
-          className={`mlAuto button-ed ${editModeState ? "non-disp" : ""}`}>
+          className={`mlAuto button-ed button-ed1 ${editModeState ? "non-disp" : ""}`}>
           Edit &#9998;
         </button>
         <button
           onClick={() => saveEdit(keys)}
-          className={`mlAuto button-ed ${editModeState ? "" : "non-disp"}`}>
-          SaveEdit
+          className={`mlAuto button-ed button-ed2 ${editModeState ? "" : "non-disp"}`}>
+          Save Edit
         </button>
         <button
           onClick={() => cancelEdit(keys)}
-          className={`button-ed ${editModeState ? "" : "non-disp"}`}>
-          CancelEdit
+          className={`button-ed button-ed2 ${editModeState ? "" : "non-disp"}`}>
+          Cancel Edit
         </button>
         <button
-          className={"button-ed bg-crimson"}
+          className={"button-ed del-button"}
           onClick={() => removeItem(item._id)}>
           &#10006;
         </button>
