@@ -2,18 +2,18 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import Context from "../context";
 
-function DataItem({ item, index, keys }) {
+const DataItem = ({ item, index, keys }) => {
   const [editModeState, setEditModeState] = useState(false);
   const textInput = useRef([]);
-  function editItem() {
+  const editItem = () => {
     setEditModeState(true);
     console.log(textInput);
   }
-  function saveEdit(keys) {
+  const saveEdit = keys => {
     setEditModeState(false);
-    var data = {};
+    let data = {};
     keys.forEach((key) => {
-      var newValue = textInput.current[key]?.innerText;
+      let newValue = textInput.current[key]?.innerText;
       if (newValue && newValue !== "\n") {
         data[key] = newValue;
       }
@@ -23,8 +23,8 @@ function DataItem({ item, index, keys }) {
   const cancelEdit = () => {
     setEditModeState(false);
     keys.forEach((key) => {
-      var textInputCurrent = textInput?.current[key];
-      var dataCurrent = item?.data[key];
+      let textInputCurrent = textInput?.current[key];
+      let dataCurrent = item?.data[key];
       if (textInputCurrent && dataCurrent) {
         textInputCurrent.innerText = dataCurrent;
       }

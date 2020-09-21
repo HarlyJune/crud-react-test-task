@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
-function AddItem({ onCreate, keys, setKeys }) {
+const AddItem = ({ onCreate, keys, setKeys }) => {
   const textInput = useRef([]);
   const addFieldKey = "addField";
-  function submitHandler(event) {
+  const submitHandler = event => {
     event.preventDefault();
-    var data = {};
+    let data = {};
     keys.forEach((key) => {
-      var newValue = textInput?.current[key]?.value;
+      let newValue = textInput?.current[key]?.value;
       if (newValue) {
         data[key] = newValue;
       }
@@ -17,11 +17,11 @@ function AddItem({ onCreate, keys, setKeys }) {
     console.warn(data);
     onCreate(data);
   }
-  function addKey(e) {
-    var el = textInput.current[addFieldKey];
-    var name = el.value;
+  const addKey = e => {
+    let el = textInput.current[addFieldKey];
+    let name = el.value;
     if (name) {
-      var newKeys = [...keys, name];
+      let newKeys = [...keys, name];
       setKeys(newKeys);
       el.value = "";
     }

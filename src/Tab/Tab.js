@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataItem from "./DataItem";
 
-function Tab(props) {
-  var keys = props?.keys;
+const Tab = props => {
+  const keys = props?.keys;
   console.info(keys, [...keys]);
   return (
     <table>

@@ -3,11 +3,11 @@ import Tab from "./Tab/Tab";
 import Context from "./context";
 const AddItem = React.lazy(() => import("./Tab/AddItem"));
 
-function App() {
+const App = () => {
   const [items, setItems] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
-  function resetKeys(newItems) {
-    var newKeys = [];
+  const resetKeys = newItems => {
+    let newKeys = [];
     newItems.forEach((item) => {
       if (item.data) {
         Object.keys(item.data).forEach((key) => newKeys.push(key));
@@ -30,10 +30,10 @@ function App() {
       });
   }, []);
   
-  function unique(array) {
+  const unique = array => {
     return array.filter((v, i, a) => a.indexOf(v) === i);
   }
-  function removeItem(_id) {
+  const removeItem = _id => {
     fetch(`http://178.128.196.163:3000/api/records/${_id}`, {
       method: "DELETE",
       headers: {
@@ -48,7 +48,7 @@ function App() {
       });
   }
 
-  function addItem(data) {
+  const addItem = data => {
     fetch(`http://localhost:3000/api/records`, {
       method: "PUT",
       headers: {
@@ -60,14 +60,14 @@ function App() {
       }),
     }).then((resp) =>
       resp.json().then((newItem) => {
-        var newItems = [...items, newItem];
+        const newItems = [...items, newItem];
         resetKeys(newItems);
         setItems(newItems);
       })
     );
   }
 
-  function EditItems(_id, data) {
+  const EditItems = (_id, data) => {
     fetch(`http://localhost:3000/api/records/${_id}`, {
       method: "POST",
       headers: {
@@ -88,7 +88,7 @@ function App() {
       })
     );
   }
-  function updateItems(){
+  const updateItems = ()=> {
     fetch("http://178.128.196.163:3000/api/records", {
       method: "GET",
       headers: {
