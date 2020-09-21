@@ -36,8 +36,6 @@
   padding: 0 1.5rem;
 }
 .field-ed {
-  /* margin-left: 1.5rem; 
-   font-size: larger;  */
   height: 90%;
   overflow: auto;
 }
@@ -49,7 +47,6 @@
 }
 .w-7rem {
   display: block;
-  /* max-width: 7rem; */
 }
 .del-button {
   position: ;
@@ -65,7 +62,6 @@ table {
   width: 100%;
   border: 1px solid grey;
   border-collapse: collapse;
-  /* background: linear-gradient(to right, #F6EFD2, #eec88a); */
 }
 th {
   border: 1px solid grey;

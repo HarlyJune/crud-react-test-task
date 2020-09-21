@@ -10,7 +10,6 @@ function DataItem({ item, index, keys }) {
     console.log(textInput);
   }
   function saveEdit(keys) {
-    //rabota
     setEditModeState(false);
     var data = {};
     keys.forEach((key) => {
@@ -39,7 +38,6 @@ function DataItem({ item, index, keys }) {
       <td>
         <strong>{index + 1}</strong>
         <pre 
-        // className={"field-ed"}
         >
           {item.data ? JSON.stringify(item.data, null, 2) : ""}
         </pre>
@@ -48,7 +46,6 @@ function DataItem({ item, index, keys }) {
         return (
           <td
             key={key}
-            // className={"field-ed"}
             ref={(el) => (textInput.current[key] = el)}
             contentEditable={editModeState}>
             {item.data ? item.data[key] : ""}
