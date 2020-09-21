@@ -12,6 +12,7 @@ function AddItem({ onCreate, keys, setKeys }) {
       if (newValue) {
         data[key] = newValue;
       }
+      textInput.current[key].value = '';
     });
     console.warn(data);
     onCreate(data);
